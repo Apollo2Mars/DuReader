@@ -57,7 +57,7 @@ def parse_args():
                                 help='weight decay')
     train_settings.add_argument('--dropout_keep_prob', type=float, default=1,
                                 help='dropout keep rate')
-    train_settings.add_argument('--batch_size', type=int, default=32,
+    train_settings.add_argument('--batch_size', type=int, default=128,
                                 help='train batch size')
     train_settings.add_argument('--epochs', type=int, default=10,
                                 help='train epochs')
@@ -80,13 +80,16 @@ def parse_args():
 
     path_settings = parser.add_argument_group('path settings')
     path_settings.add_argument('--train_files', nargs='+',
-                               default=['../data/demo/trainset/search.train.json'],
+                               default=['../data/preprocessed/trainset/search.train.json'],
                                help='list of files that contain the preprocessed train data')
     path_settings.add_argument('--dev_files', nargs='+',
-                               default=['../data/demo/devset/search.dev.json'],
+                               default=['../data/preprocessed/devset/search.dev.json'],
                                help='list of files that contain the preprocessed dev data')
+    #path_settings.add_argument('--test_files', nargs='+',
+    #                           default=['../data/preprocessed/testset/search.test.json'],
+    #                           help='list of files that contain the preprocessed test data')
     path_settings.add_argument('--test_files', nargs='+',
-                               default=['../data/demo/testset/search.test.json'],
+                               default=['../data/preprocessed/testset/build.test.json'],
                                help='list of files that contain the preprocessed test data')
     path_settings.add_argument('--brc_dir', default='../data/baidu',
                                help='the dir with preprocessed baidu reading comprehension data')
@@ -206,6 +209,7 @@ def predict(args):
                                              pad_id=vocab.get_id(vocab.pad_token), shuffle=False)
     rc_model.evaluate(test_batches,
                       result_dir=args.result_dir, result_prefix='test.predicted')
+
 
 
 def run():
